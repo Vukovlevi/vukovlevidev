@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -32,7 +33,13 @@ func main() {
 
     port := os.Getenv("PORT")
     log.Info("server started", "port", port)
-    if err = e.Start(fmt.Sprintf(":%s", port)); err != nil {
+
+    s := http.Server{
+        Addr: fmt.Sprintf(":%s", port),
+        Handler: e,
+    }
+
+    if err = s.ListenAndServeTLS("cert/certificate.crt", "cert/private.key"); err != nil {
         log.Error("server could not be started", "err", err)
         os.Exit(1)
     }
