@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BattleshipX - Ultimate Naval Warfare Experience</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background-color: #2a2a2a;
+            padding: 1rem 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        a {
+            color: #4da8da;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .hero, .features, .download, .about {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4da8da;
+            color: #ffffff;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .button:hover {
+            background-color: #3a8bb8;
+        }
+        .button.secondary {
+            background-color: transparent;
+            border: 1px solid #4da8da;
+            color: #4da8da;
+        }
+        .button.secondary:hover {
+            background-color: rgba(77, 168, 218, 0.1);
+        }
+        .features {
+            background-color: #2a2a2a;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .feature {
+            padding: 1rem;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        footer {
+            background-color: #2a2a2a;
+            padding: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="3"></circle>
+                    <line x1="12" y1="22" x2="12" y2="8"></line>
+                    <path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+                </svg>
+                <span>BattleshipX</span>
+            </a>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Welcome to BattleshipX</h1>
+                <p>Dive into the ultimate naval warfare experience. Strategy, tactics, and excitement await you in BattleshipX.</p>
+                <a href="#download" class="button">Download Now</a>
+                <a href="#features" class="button secondary">Learn More</a>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Game Features</h2>
+                <div class="feature-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🌊</div>
+                        <h3>Dynamic Sea Battles</h3>
+                        <p>Experience realistic naval warfare with changing weather conditions.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Strategic Gameplay</h3>
+                        <p>Plan your moves, deploy your fleet, and outsmart your opponents.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌎</div>
+                        <h3>Global Multiplayer</h3>
+                        <p>Challenge players from around the world in epic sea battles.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2>Ready to Set Sail?</h2>
+                <p>Download BattleshipX now and start your naval adventure. Available on multiple platforms.</p>
+                <a href="#" class="button">Download for Windows</a>
+                <a href="#" class="button secondary">Download for Mac</a>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About BattleshipX</h2>
+                <p>BattleshipX is developed by a team of passionate gamers and naval enthusiasts. Our mission is to bring the excitement of naval warfare to your screen with stunning graphics and engaging gameplay.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 BattleshipX. All rights reserved.</p>
+            <nav>
+                <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
