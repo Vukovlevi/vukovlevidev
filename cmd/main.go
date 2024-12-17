@@ -26,8 +26,12 @@ func main() {
     e := echo.New()
 
     e.GET("/", routes.HandleIndex)
+    e.GET("/battleship", routes.HandleBattleship)
+
+    e.Static("/", "public")
 
     port := os.Getenv("PORT")
+    log.Info("server started", "port", port)
     if err = e.Start(fmt.Sprintf(":%s", port)); err != nil {
         log.Error("server could not be started", "err", err)
         os.Exit(1)
