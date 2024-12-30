@@ -29,6 +29,10 @@ func main() {
     e.GET("/", routes.HandleIndex)
     e.GET("/battleship", routes.HandleBattleship)
 
+    e.GET("/login", routes.HandleLogin)
+    e.GET("/login-form", routes.HandleLoginForm)
+    e.GET("/register", routes.HandleRegister)
+
     e.Static("/", "public")
 
     port := os.Getenv("PORT")
@@ -39,8 +43,17 @@ func main() {
         Handler: e,
     }
 
-    if err = s.ListenAndServeTLS("cert/certificate.crt", "cert/private.key"); err != nil {
-        log.Error("server could not be started", "err", err)
-        os.Exit(1)
+    env := os.Getenv("ENVIRONMENT")
+
+    if env == "PROD" {
+        if err = s.ListenAndServeTLS("cert/certificate.crt", "cert/private.key"); err != nil {
+            log.Error("server could not be started", "err", err)
+            os.Exit(1)
+        }
+    } else {
+        if err = s.ListenAndServe(); err != nil {
+            log.Error("server could not be started", "err", err)
+            os.Exit(1)
+        }
     }
 }
