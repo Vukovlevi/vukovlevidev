@@ -13,6 +13,19 @@ func HandleGetLogin(c echo.Context) error {
     return render(v.Auth(), c)
 }
 
+func HandlePostLogin(c echo.Context) error {
+    username := c.FormValue("username")
+    password := c.FormValue("password")
+
+    _, err := models.GetUserByUsernameAndPassword(username, password)
+    if err != nil {
+        c.Response().WriteHeader(http.StatusUnauthorized)
+        return render(views.Error("hibás felhasználónév vagy jelszó"), c)
+    }
+
+    return nil
+}
+
 func HandleLoginForm(c echo.Context) error {
     return render(v.Login(), c)
 }

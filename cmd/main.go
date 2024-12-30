@@ -41,6 +41,7 @@ func main() {
     e.GET("/battleship", routes.HandleBattleship)
 
     e.GET("/login", routes.HandleGetLogin)
+    e.POST("/login", routes.HandlePostLogin)
     e.GET("/login-form", routes.HandleLoginForm)
     e.GET("/register", routes.HandleGetRegister)
     e.POST("/register", routes.HandlePostRegister)

@@ -1,6 +1,10 @@
 package models
 
-import "github.com/vukovlevi/vukovlevidev/db"
+import (
+	"github.com/labstack/gommon/log"
+	"github.com/vukovlevi/vukovlevidev/db"
+	"golang.org/x/crypto/bcrypt"
+)
 
 type Role string
 
@@ -13,7 +17,13 @@ type User struct {
 
 func (u *User) CreateUser() error {
     stmt := `INSERT INTO users (username, password, role) VALUES (?, ?, ?);`
-    _, err := db.DB.Exec(stmt, u.Username, u.Password, u.Role)
+
+    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), 12)
+    if err != nil {
+        return err
+    }
+
+    _, err = db.DB.Exec(stmt, u.Username, string(hashedPassword), u.Role)
     if err != nil {
         Log.Warning("could not create user", "err", err)
         return err
@@ -22,13 +32,20 @@ func (u *User) CreateUser() error {
 }
 
 func GetUserByUsernameAndPassword(username, password string) (*User, error) {
-    stmt := `SELECT id, username, role FROM users WHERE username = ? AND password = ?;`
-    row := db.DB.QueryRow(stmt, username, password)
+    stmt := `SELECT * FROM users WHERE username = ?;`
+    row := db.DB.QueryRow(stmt, username)
 
     user := new(User)
-    err := row.Scan(&user.Id, &user.Username, &user.Role)
+    err := row.Scan(&user.Id, &user.Username, &user.Password, &user.Role)
     if err != nil {
         return nil, err
     }
+
+    err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+    if err != nil {
+        return nil, err
+    }
+
+    log.Info("got user", "username", user.Username, "passwd", user.Password, "role", user.Role)
     return user, nil
 }
