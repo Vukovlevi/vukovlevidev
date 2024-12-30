@@ -11,7 +11,7 @@ templ Register() {
         <label for="password-repeat">Jelszó megerősítése</label>
         <input type="password" placeholder="Jelszó megerősítése" id="password-repeat" name="password-repeat"/>
 
-        <button hx-post="/register">Regisztráció</button>
+        <button hx-post="/register" hx-target="#result" hx-swap="innerHTML">Regisztráció</button>
         <button hx-get="/login-form" hx-swap="outerHTML" hx-target="#login-form" type="button">Bejelentkezés</button>
     </form>
 }

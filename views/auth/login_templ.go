@@ -29,7 +29,7 @@ func Login() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"login-form\"><label for=\"username\">Felhasználónév</label> <input type=\"text\" placeholder=\"Felhasználónév\" id=\"username\" name=\"username\"> <label for=\"password\">Jelszó</label> <input type=\"password\" placeholder=\"Jelszó\" id=\"password\" name=\"password\"> <button hx-post=\"/login\">Bejelentkezés</button> <button hx-get=\"/register\" hx-swap=\"outerHTML\" hx-target=\"#login-form\" type=\"button\">Regisztráció</button></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"login-form\"><label for=\"username\">Felhasználónév</label> <input type=\"text\" placeholder=\"Felhasználónév\" id=\"username\" name=\"username\"> <label for=\"password\">Jelszó</label> <input type=\"password\" placeholder=\"Jelszó\" id=\"password\" name=\"password\"> <button hx-post=\"/login\" hx-target=\"#result\" hx-swap=\"innerHTML\">Bejelentkezés</button> <button hx-get=\"/register\" hx-swap=\"outerHTML\" hx-target=\"#login-form\" type=\"button\">Regisztráció</button></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

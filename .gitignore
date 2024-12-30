@@ -3,4 +3,4 @@ out/
 out.log
 debug.txt
 cert/
-db/
+*.db

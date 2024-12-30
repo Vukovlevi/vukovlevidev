@@ -29,7 +29,7 @@ func Register() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"login-form\"><label for=\"username\">Felhasználónév</label> <input type=\"text\" placeholder=\"Felhasználónév\" id=\"username\" name=\"username\"> <label for=\"password\">Jelszó</label> <input type=\"password\" placeholder=\"Jelszó\" id=\"password\" name=\"password\"> <label for=\"password-repeat\">Jelszó megerősítése</label> <input type=\"password\" placeholder=\"Jelszó megerősítése\" id=\"password-repeat\" name=\"password-repeat\"> <button hx-post=\"/register\">Regisztráció</button> <button hx-get=\"/login-form\" hx-swap=\"outerHTML\" hx-target=\"#login-form\" type=\"button\">Bejelentkezés</button></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"login-form\"><label for=\"username\">Felhasználónév</label> <input type=\"text\" placeholder=\"Felhasználónév\" id=\"username\" name=\"username\"> <label for=\"password\">Jelszó</label> <input type=\"password\" placeholder=\"Jelszó\" id=\"password\" name=\"password\"> <label for=\"password-repeat\">Jelszó megerősítése</label> <input type=\"password\" placeholder=\"Jelszó megerősítése\" id=\"password-repeat\" name=\"password-repeat\"> <button hx-post=\"/register\" hx-target=\"#result\" hx-swap=\"innerHTML\">Regisztráció</button> <button hx-get=\"/login-form\" hx-swap=\"outerHTML\" hx-target=\"#login-form\" type=\"button\">Bejelentkezés</button></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
