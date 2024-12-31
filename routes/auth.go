@@ -2,6 +2,8 @@ package routes
 
 import (
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/vukovlevi/vukovlevidev/auth"
@@ -18,13 +20,34 @@ func HandlePostLogin(c echo.Context) error {
     username := c.FormValue("username")
     password := c.FormValue("password")
 
-    _, err := models.GetUserByUsernameAndPassword(username, password)
+    user, err := models.GetUserByUsernameAndPassword(username, password)
     if err != nil {
         c.Response().WriteHeader(http.StatusUnauthorized)
         return render(views.Error("hibás felhasználónév vagy jelszó"), c)
     }
 
-    return nil
+    sessionToken, err := auth.AuthenticateUser(user.Id)
+    if err != nil {
+        c.Response().WriteHeader(http.StatusInternalServerError)
+        return render(views.Error("szerver hiba"), c)
+    }
+
+    env := os.Getenv("ENVIRONMENT")
+    secureCookie := false
+    if env == "PROD" {
+        secureCookie = true
+    }
+    cookie := http.Cookie{
+        Name: "session_token",
+        Value: sessionToken,
+        HttpOnly: true,
+        Secure: secureCookie,
+        Expires: time.Now().Add(time.Hour * 24),
+    }
+    c.SetCookie(&cookie)
+
+    c.Response().Header().Add("HX-Redirect", "/")
+    return c.NoContent(http.StatusOK)
 }
 
 func HandleLoginForm(c echo.Context) error {
@@ -58,7 +81,7 @@ func HandlePostRegister(c echo.Context) error {
     err = user.CreateUser()
     if err != nil {
         c.Response().WriteHeader(http.StatusInternalServerError)
-        return render(views.Error("a felhasználót nem sikerült létrehozni"), c)
+        return render(views.Error("a felhasználót nem sikerült létrehozni, előfordulhat hogy már létezik felhasználó ezzel a névvel"), c)
     }
 
     c.Response().WriteHeader(http.StatusCreated)

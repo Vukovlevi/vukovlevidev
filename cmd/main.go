@@ -8,20 +8,20 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/vukovlevi/battleship/server/logger"
 	"github.com/vukovlevi/vukovlevidev/db"
+	"github.com/vukovlevi/vukovlevidev/middlewares"
+	"github.com/vukovlevi/vukovlevidev/models"
 	"github.com/vukovlevi/vukovlevidev/routes"
-    _ "github.com/mattn/go-sqlite3"
 )
-
-var Log *logger.Logger
 
 func main() {
     debugMode := false
     flag.BoolVar(&debugMode, "debug", false, "debug mode enables the logger to write to specified output instead of default out.log and debug.txt")
 
     log := logger.CreateLogger(os.Stdout, os.Stdout, debugMode)
-    Log = &log
+    models.SetLogger(&log)
 
     err := db.Connect()
     if err != nil {
@@ -45,6 +45,10 @@ func main() {
     e.GET("/login-form", routes.HandleLoginForm)
     e.GET("/register", routes.HandleGetRegister)
     e.POST("/register", routes.HandlePostRegister)
+
+    adminGroup := e.Group("/admin")
+    adminGroup.Use(middlewares.AuthorizeAdminUser)
+    adminGroup.GET("", routes.HandleGetAdmin)
 
     e.Static("/", "public")
 

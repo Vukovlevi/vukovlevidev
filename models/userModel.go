@@ -1,10 +1,10 @@
 package models
 
 import (
-	"github.com/labstack/gommon/log"
+	"log/slog"
+
 	"github.com/vukovlevi/vukovlevidev/auth"
 	"github.com/vukovlevi/vukovlevidev/db"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type Role string
@@ -21,12 +21,13 @@ func (u *User) CreateUser() error {
 
     hashedPassword, err := auth.CreatePasswordHash(u.Password)
     if err != nil {
+        slog.Error("could not create hashed password", "err", err)
         return err
     }
 
     _, err = db.DB.Exec(stmt, u.Username, string(hashedPassword), u.Role)
     if err != nil {
-        Log.Warning("could not create user", "err", err)
+        slog.Error("could not create user is db", "err", err)
         return err
     }
     return nil
