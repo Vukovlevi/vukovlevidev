@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/vukovlevi/vukovlevidev/auth"
 	"github.com/vukovlevi/vukovlevidev/models"
 	"github.com/vukovlevi/vukovlevidev/views"
 	v "github.com/vukovlevi/vukovlevidev/views/auth"
@@ -42,14 +43,10 @@ func HandlePostRegister(c echo.Context) error {
     password := c.FormValue("password")
     passwordRepeat := c.FormValue("password-repeat")
 
-    if len(password) < 8 {
+    err := auth.ValidatePassword(password, passwordRepeat)
+    if err != nil {
         c.Response().WriteHeader(http.StatusBadRequest)
-        return render(views.Error("a jelszó túl rövid"), c)
-    }
-
-    if password != passwordRepeat {
-        c.Response().WriteHeader(http.StatusBadRequest)
-        return render(views.Error("a jelszavak nem egyeznek"), c)
+        return render(views.Error(err.Error()), c)
     }
 
     user := models.User{
@@ -58,7 +55,7 @@ func HandlePostRegister(c echo.Context) error {
         Role: "user",
     }
 
-    err := user.CreateUser()
+    err = user.CreateUser()
     if err != nil {
         c.Response().WriteHeader(http.StatusInternalServerError)
         return render(views.Error("a felhasználót nem sikerült létrehozni"), c)

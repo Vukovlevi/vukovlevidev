@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/labstack/gommon/log"
+	"github.com/vukovlevi/vukovlevidev/auth"
 	"github.com/vukovlevi/vukovlevidev/db"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -18,7 +19,7 @@ type User struct {
 func (u *User) CreateUser() error {
     stmt := `INSERT INTO users (username, password, role) VALUES (?, ?, ?);`
 
-    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), 12)
+    hashedPassword, err := auth.CreatePasswordHash(u.Password)
     if err != nil {
         return err
     }
@@ -41,11 +42,10 @@ func GetUserByUsernameAndPassword(username, password string) (*User, error) {
         return nil, err
     }
 
-    err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+    err = auth.CheckPassword(user.Password, password)
     if err != nil {
         return nil, err
     }
 
-    log.Info("got user", "username", user.Username, "passwd", user.Password, "role", user.Role)
     return user, nil
 }
